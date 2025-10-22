@@ -103,16 +103,7 @@ function App() {
 
   return (
     <div className="app">
-      {/* Backend Status Indicator */}
-      {backendStatus === 'offline' && (
-        <div className="backend-offline-warning">
-          <div className="warning-content">
-            <span>⚠️ Backend is offline. Using local storage mode.</span>
-            <small>Some features may be limited.</small>
-          </div>
-        </div>
-      )}
-
+      
       {!user ? (
         <Auth 
           onLogin={handleLogin} 
