@@ -9,8 +9,9 @@ const app = express();
 
 // Updated CORS configuration for production
 const allowedOrigins = [
+  'http://localhost:5173/',
   'http://localhost:3000',
-  'https://your-frontend-app.onrender.com', // We'll update this after frontend deployment
+  'https://web-pdfannotator.vercel.app/', // We'll update this after frontend deployment
 ];
 
 app.use(cors({
