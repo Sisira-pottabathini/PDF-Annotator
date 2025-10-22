@@ -7,11 +7,11 @@ require('dotenv').config();
 const testRoutes = require('./routes/test');
 const app = express();
 
-// Updated CORS configuration for production
+// ✅ FIXED CORS configuration - REMOVED TRAILING SLASHES
 const allowedOrigins = [
-  'http://localhost:5173/',
-  'http://localhost:3000',
-  'https://web-pdfannotator.vercel.app/', // We'll update this after frontend deployment
+  'http://localhost:5173', // ✅ Removed trailing slash
+  'http://localhost:3000', // ✅ Removed trailing slash
+  'https://web-pdfannotator.vercel.app', // ✅ Removed trailing slash
 ];
 
 app.use(cors({
@@ -19,18 +19,25 @@ app.use(cors({
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
     
+    console.log('🔍 Checking CORS for origin:', origin); // Debug log
+    
     // Allow all Render subdomains and specified origins
-    if (allowedOrigins.indexOf(origin) !== -1 || origin.includes('.render.com') || origin.includes('.vercel.app')) {
+    if (allowedOrigins.indexOf(origin) !== -1 || 
+        origin.includes('.render.com') || 
+        origin.includes('.vercel.app') ||
+        origin.includes('localhost:') || // Added localhost wildcard
+        origin.includes('127.0.0.1:')) { // Added 127.0.0.1 wildcard
+      console.log('✅ CORS allowed for origin:', origin);
       callback(null, true);
     } else {
-      console.log('CORS blocked for origin:', origin);
+      console.log('❌ CORS blocked for origin:', origin);
+      console.log('📋 Allowed origins:', allowedOrigins);
       callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true
 }));
 
-// Remove duplicate cors() middleware - KEEP ONLY THE ONE ABOVE
 // Middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
