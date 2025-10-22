@@ -9,9 +9,8 @@ const app = express();
 
 // ✅ FIXED CORS configuration - REMOVED TRAILING SLASHES
 const allowedOrigins = [
-  'http://localhost:5173', // ✅ Removed trailing slash
-  'http://localhost:3000', // ✅ Removed trailing slash
-  'https://web-pdfannotator.vercel.app', // ✅ Removed trailing slash
+   // ✅ Removed trailing slash
+  'https://pdf-annotator-5l4b.vercel.app/', // ✅ Removed trailing slash
 ];
 
 app.use(cors({
